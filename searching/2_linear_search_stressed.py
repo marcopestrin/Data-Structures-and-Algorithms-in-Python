@@ -11,7 +11,3 @@ def locate_card(cards, query):
 
 result, passed, runtime = evaluate_test_case(locate_card, large_test, display=False)
 print("Result: {}\nPassed: {}\nExecution Time: {} ms".format(result, passed, runtime))
-
-# Result: 9999998
-# Passed: True
-# Execution Time: 3276.964 ms

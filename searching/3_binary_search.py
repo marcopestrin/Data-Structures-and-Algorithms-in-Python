@@ -32,10 +32,6 @@ evaluate_test_cases(locate_card, tests)
 result, passed, runtime = evaluate_test_case(locate_card, large_test, display=False)
 print("Result: {}\nPassed: {}\nExecution Time: {} ms".format(result, passed, runtime))
 
-# Result: 9999998
-# Passed: True
-# Execution Time: 0.248 ms
-
 def first_position(nums, target):
     def condition(mid):
         if nums[mid] == target:
