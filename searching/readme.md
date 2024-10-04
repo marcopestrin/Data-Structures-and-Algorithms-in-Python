@@ -2,6 +2,8 @@
 pip3 install jovian --upgrade --quiet
 
 ## Complexity Algorithms
+![BigONotation](big_o_notation.png)
+
 ### Linear Search
 O(n)
 
