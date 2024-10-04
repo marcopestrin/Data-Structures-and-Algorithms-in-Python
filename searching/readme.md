@@ -1,10 +1,8 @@
-# Dependencies
+## Dependencies
 pip3 install jovian --upgrade --quiet
 
-
-# Complexity Algorithms
-## Linear Search
+## Complexity Algorithms
+### Linear Search
 O(n)
-
-## Binary Search
+### Binary Search
 O(log n)
