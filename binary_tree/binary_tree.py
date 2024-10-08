@@ -3,7 +3,6 @@ class TreeNode:
         self.key = key
         self.left = None
         self.right = None
-        
     
 def parse_tuple(data):
     # print("--->", data)
@@ -76,4 +75,3 @@ def tree_size(node):
     return tree_size(node.left) + tree_size(node.right) +1
 
 print('Tree height:', tree_height(tree), ' Tree size:', tree_size(tree))
-
