@@ -44,9 +44,11 @@ def insert(node, key, value):
     if node is None:
         node = BSTNode(key, value)
     elif key < node.key:
+        # in alphabetical order this name is before the key name --> add to left side
         node.left = insert(node.left, key, value)
         node.left.parent = node
     elif key > node.key:
+        # in alphabetical order this name is after the key name --> add to right side
         node.right = insert(node.right, key, value)
         node.right.parent = node
     return node
@@ -81,39 +83,85 @@ def is_balanced(node):
         return True, 0
     balanced_l, height_l = is_balanced(node.left)
     balanced_r, height_r = is_balanced(node.right)
-    print('balanced_r:',balanced_l,', height_l:',height_l,', balanced_r:',balanced_r,', height_r:',height_r,)
+    # print('balanced_r:',balanced_l,', height_l:',height_l,', balanced_r:',balanced_r,', height_r:',height_r,)
     balanced = balanced_l and balanced_r and abs(height_l - height_r) <=1
     height = 1 + max(height_l, height_r)
     return balanced, height
 
 # creating nodes
-marco = User('marco', 'Marco Pestrin', 'marco_pestrin@example.com')
-francesco = User('francesco', 'Francesco Facci', 'francesco_facci@example.com')
-gianni = User('gianni', 'Gianni Basso', 'gianni_basso@example.com')
-andrea = User('andrea', 'Andrea Chiesa', 'andrea_chiesa@example.com')
-martino = User('martino', 'Martino Vanin', 'martino_Vanin@example.com')
+andrea = User('Andrea', 'Andrea Chiesa', 'andrea_chiesa@example.com')
+giacomino = User('Giacomino', 'Giacomino Rossi', 'giacomino_rossi@example.com')
+gabriele = User('Gabriele', 'Gabriele Franchetto', 'gabriele_franchetto@example.com')
+giacomo = User('Giacomo', 'Giacomo Bagolato', 'giacomo_bagolato@example.com')
+gianni = User('Gianni', 'Gianni Basso', 'gianni_basso@example.com')
+leonardo = User('Leonardo', 'Leonardo Bosco', 'leonardo_bosco@example.com')
+martino = User('Martino', 'Martino Pestrin', 'martino_pestrin@example.com')
+francesco = User('Francesco', 'Francesco Cortese', 'francesco_corteseexample.com')
+marco = User('Marco', 'Marco Facci', 'marco_facci@example.com')
+gianluca = User('Gianluca', 'Gianluca Guba', 'gianluca_guba@example.com')
 
 # adding user
 tree = insert(None, andrea.username, andrea)
-insert(tree, gianni.username, gianni)
-insert(tree, martino.username, martino)
-insert(tree, francesco.username, francesco)
+# insert(tree, gianni.username, gianni)
+# insert(tree, martino.username, martino)
+# insert(tree, francesco.username, francesco)
 insert(tree, marco.username, marco)
 display_keys(tree)
 
 # finding an user
-my_node = find(tree, 'marco')
+my_node = find(tree, 'Marco')
 not_found_node = find(tree, 'gilberto')
 print('Not found node: ', not_found_node)
 print('Found node: ', my_node.value)
 
 # updating an user
-update(tree, 'andrea', User('andrea', 'Andrea Campanile', 'andrea_campanile@example.com'))
-my_node_updated = find(tree, 'andrea')
+update(tree, 'andrea', User('Andrea', 'Andrea Campanile', 'andrea_campanile@example.com'))
+my_node_updated = find(tree, 'Andrea')
 print('Edited node: ', my_node_updated.value.name)
 
 # show all nodes
 print(list_all(tree))
 print(is_balanced(tree))
 
+# adding user
+tree2 = insert(None, giacomo.username, giacomo) # tree root
 
+insert(tree2, gabriele.username, gabriele)
+# Gabriele is left than Giacomo because A (gAbriele) is before I (gIacomo)
+
+insert(tree2, gianni.username, gianni)
+# Gianni is right than Giacomo because N (giaNni) is after C (giaComo)
+
+insert(tree2, leonardo.username, leonardo)
+# Leonardo is right than Giacomo because L (Leonardo) is after G (Giacomo)
+# Leonardo is right than Gianni because L (Leonardo) is after G (Gianni)
+
+insert(tree2, andrea.username, andrea)
+# Andrea is left than Giacomo because A (Andrea) is before G (Giacomo)
+# Andrea is left than Gabriele because A (Andrea) is before G (Gabriele)
+
+#                 Leonardo
+#         Gianni
+#                 -
+# Giacomo
+#                 -
+#         Gabriele
+#                 Andrea
+
+insert(tree2, gianluca.username, gianluca)
+# Gianluca is after Giacomo (go right) and before Gianni (go left)
+
+insert(tree2, giacomino.username, giacomino)
+# Giacomino is before Giacomo (go left) and after Gabriele (go right)
+
+#                 Leonardo
+#         Gianni
+#                 Gianluca
+# Giacomo
+#                 Giacomino
+#         Gabriele
+#                 Andrea
+
+
+display_keys(tree2)
+print(is_balanced(tree))
