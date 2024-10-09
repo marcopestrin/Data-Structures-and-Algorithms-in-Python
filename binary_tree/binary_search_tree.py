@@ -1,13 +1,21 @@
 from binary_tree import tree, display_keys
+from User import User
 
-# BST (Binary Search Tree) is a binary tree that satisfies the following conditions:
-# 1: The left subtree of any node only contains nodes with keys less than the node's key
-# 2: The right subtree of any node only contains nodes with keys greater than the node's key
+class BSTNode():
+    def __init__(self, key, value=None):
+        self.key = key
+        self.value = value
+        self.left = None
+        self.right = None
+        self.parent = None
 
 def remove_none(nums):
     return [x for x in nums if x is not None]
 
 def is_bst(node):
+    # BST (Binary Search Tree) is a binary tree that satisfies the following conditions:
+    # 1: The left subtree of any node only contains nodes with keys less than the node's key
+    # 2: The right subtree of any node only contains nodes with keys greater than the node's key
     if node is None:
         return True, None, None
     
@@ -20,22 +28,6 @@ def is_bst(node):
     max_key = max(remove_none([max_l, node.key, max_r]))
     print(node.key, min_key, max_key, is_bst_node)
     return is_bst_node, min_key, max_key
-
-# is_bst(tree) # no BST because 3 is higher than 1
-
-class User:
-    def __init__(self, username, name, email):
-        self.username = username
-        self.name = name
-        self.email = email
-
-class BSTNode():
-    def __init__(self, key, value=None):
-        self.key = key
-        self.value = value
-        self.left = None
-        self.right = None
-        self.parent = None
 
 def insert(node, key, value):
     # Starting from the root node, we compare the key to be inserted with the current node's key
@@ -75,6 +67,8 @@ def list_all(node):
     return list_all(node.left) + [(node.key, node.value)] + list_all(node.right)
 
 def is_balanced(node):
+    # The tree is balanced i.e. it does not skew too heavily to one side or the other.
+    # The left and right subtrees of any node shouldn't differ in height/depth by more than 1 level.
     # Here's a recursive strategy:
     # Ensure that the left subtree is balanced.
     # Ensure that the right subtree is balanced.
@@ -88,6 +82,25 @@ def is_balanced(node):
     height = 1 + max(height_l, height_r)
     return balanced, height
 
+def make_balanced_bst(data, lo=0, hi=None, parent=None):
+    #  create a balanced BST from a sorted list/array of key-value pairs
+    if hi is None:
+        hi = len(data) - 1
+    if lo > hi:
+        return None
+    mid = (lo + hi) // 2
+    key, value = data[mid]
+    root = BSTNode(key, value)
+    root.parent = parent
+    root.left = make_balanced_bst(data, lo, mid-1, root)
+    root.right = make_balanced_bst(data, mid+1, hi, root)
+    return root
+
+def balance_bst(node):
+    return make_balanced_bst(list_all(node))
+
+# is_bst(tree) # no BST because 3 is higher than 1
+
 # creating nodes
 andrea = User('Andrea', 'Andrea Chiesa', 'andrea_chiesa@example.com')
 giacomino = User('Giacomino', 'Giacomino Rossi', 'giacomino_rossi@example.com')
@@ -96,11 +109,12 @@ giacomo = User('Giacomo', 'Giacomo Bagolato', 'giacomo_bagolato@example.com')
 gianni = User('Gianni', 'Gianni Basso', 'gianni_basso@example.com')
 leonardo = User('Leonardo', 'Leonardo Bosco', 'leonardo_bosco@example.com')
 martino = User('Martino', 'Martino Pestrin', 'martino_pestrin@example.com')
-francesco = User('Francesco', 'Francesco Cortese', 'francesco_corteseexample.com')
+francesco = User('Francesco', 'Francesco Cortese', 'francesco_cortese@example.com')
 marco = User('Marco', 'Marco Facci', 'marco_facci@example.com')
 gianluca = User('Gianluca', 'Gianluca Guba', 'gianluca_guba@example.com')
 
-# adding user
+print('--------------------------------------')
+print('### Simple adding users (nodes into a tree)')
 tree = insert(None, andrea.username, andrea)
 # insert(tree, gianni.username, gianni)
 # insert(tree, martino.username, martino)
@@ -108,22 +122,26 @@ tree = insert(None, andrea.username, andrea)
 insert(tree, marco.username, marco)
 display_keys(tree)
 
-# finding an user
+print('--------------------------------------')
+print('### Finding User:')
 my_node = find(tree, 'Marco')
 not_found_node = find(tree, 'gilberto')
 print('Not found node: ', not_found_node)
 print('Found node: ', my_node.value)
 
-# updating an user
+print('--------------------------------------')
+print('### Updating User:')
 update(tree, 'andrea', User('Andrea', 'Andrea Campanile', 'andrea_campanile@example.com'))
 my_node_updated = find(tree, 'Andrea')
 print('Edited node: ', my_node_updated.value.name)
 
-# show all nodes
+print('--------------------------------------')
+print('### Show all nodes')
 print(list_all(tree))
 print(is_balanced(tree))
 
-# adding user
+print('--------------------------------------')
+print('### Creating manually a balanced tree:')
 tree2 = insert(None, giacomo.username, giacomo) # tree root
 
 insert(tree2, gabriele.username, gabriele)
@@ -164,4 +182,27 @@ insert(tree2, giacomino.username, giacomino)
 
 
 display_keys(tree2)
-print(is_balanced(tree))
+print('Is Balanced? ', is_balanced(tree))
+
+print('--------------------------------------')
+print('### Create automatically a balanced tree:')
+users = [andrea, giacomino, gabriele, giacomo, gianni, leonardo, martino, francesco, marco, gianluca]
+data = [(user.username, user) for user in users]
+balanced_data = make_balanced_bst(data)
+display_keys(balanced_data)
+
+print('--------------------------------------')
+print('### Creating unbalanced tree:')
+tree3 = None
+for user in users:
+    tree3 = insert(tree3, user.username, user)
+display_keys(tree3)
+print('Is Balanced? ', is_balanced(tree3))
+
+print('--------------------------------------')
+print('### Balance unbalanced tree:')
+tree4 = balance_bst(tree3)
+display_keys(tree4)
+print('Is Balanced? ', is_balanced(tree4))
+
+
