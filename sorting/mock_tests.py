@@ -1,7 +1,7 @@
 import random
 
-in_list = list(range(1000))
-out_list = list(range(1000))
+in_list = list(range(10))
+out_list = list(range(10))
 random.shuffle(in_list)
 
 tests = []

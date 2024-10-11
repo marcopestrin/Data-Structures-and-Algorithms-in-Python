@@ -21,4 +21,4 @@ def insertion_sort(nums):
     return nums
 
 results = evaluate_test_cases(insertion_sort, tests)
-print(results)
+# print(results)

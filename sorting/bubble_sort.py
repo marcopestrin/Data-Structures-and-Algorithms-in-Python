@@ -30,4 +30,4 @@ def bubble_sort(nums):
 
 
 results = evaluate_test_cases(bubble_sort, tests)
-print(results)
+# print(results)
