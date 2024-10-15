@@ -33,7 +33,7 @@ def max_profit_dp(weights, profits, capacity):
             else:
                 opt2 = profits[i] + table[i][c-weights[i]]
                 table[i+1][c] = max(opt1, opt2)
-                print('--------->','opt1:', opt1, ' opt2:', opt2, 'selected: ',max(opt1, opt2), 'this profit: ', profits[i])
+                print('--------->','weight:',weights[i],' profit opt1:', opt1, ' profit opt2:', opt2, 'selected: ',max(opt1, opt2), 'this profit: ', profits[i])
             
             for row in table:
                 print(' | '.join(f'{item:2}' for item in row))
