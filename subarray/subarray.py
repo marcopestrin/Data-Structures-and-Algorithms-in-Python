@@ -1,5 +1,4 @@
 import time
-start_time = time.time()
 
 arr1 = [1, 7, 4, 2, 1, 3, 11, 5]
 target1 = 10
