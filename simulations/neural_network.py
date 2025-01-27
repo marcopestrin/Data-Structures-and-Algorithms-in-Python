@@ -53,8 +53,8 @@ def train():
         w2 = w2 - learning_rate * dcost_dw2
         b = b - learning_rate * dcost_db
         
-        # return new values
-        return w1, w2, b
+    # return new values
+    return w1, w2, b
 
 # just a generic mock dataset used for training
 # structur is [value1, value2, target]
